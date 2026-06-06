@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import HeroBanner from '@/components/HeroBanner';
 import ContentRow from '@/components/ContentRow';
-import { Play } from 'lucide-react';
+import { Play, UserCircle } from 'lucide-react';
 import Link from 'next/link';
 import styles from './page.module.css';
 
@@ -26,8 +26,18 @@ const MOCK_MUSIC = [
 
 export default function Home() {
   const [continueWatching, setContinueWatching] = useState<any[]>([]);
+  const [showNamePrompt, setShowNamePrompt] = useState(false);
+  const [userName, setUserName] = useState('');
 
   useEffect(() => {
+    // Check for username
+    const savedName = localStorage.getItem('busstream_username');
+    if (!savedName) {
+      setShowNamePrompt(true);
+    } else {
+      setUserName(savedName);
+    }
+
     // Simulate loading from localStorage
     const saved = localStorage.getItem('busstream_continue');
     if (saved) {
@@ -44,6 +54,14 @@ export default function Home() {
       ]);
     }
   }, []);
+
+  const handleSaveName = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (userName.trim()) {
+      localStorage.setItem('busstream_username', userName.trim());
+      setShowNamePrompt(false);
+    }
+  };
 
   return (
     <div className={styles.main}>
@@ -77,6 +95,27 @@ export default function Home() {
         <ContentRow title="Trending Movies" items={MOCK_MOVIES.slice(2, 7)} />
         <ContentRow title="Nepali Hits" items={MOCK_MUSIC.slice(0, 4)} />
       </div>
+
+      {showNamePrompt && (
+        <div className={styles.namePromptOverlay}>
+          <div className={`glass-card ${styles.namePromptCard}`}>
+            <UserCircle size={48} className={styles.namePromptIcon} />
+            <h2>Welcome aboard!</h2>
+            <p>Pick a nickname for this journey to save your progress and preferences.</p>
+            <form onSubmit={handleSaveName} className={styles.nameForm}>
+              <input
+                type="text"
+                placeholder="Enter a nickname..."
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                className={styles.nameInput}
+                autoFocus
+              />
+              <button type="submit" className={styles.nameBtn}>Start Watching</button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

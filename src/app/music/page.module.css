@@ -1,0 +1,416 @@
+.container {
+  padding: 2rem 5% 100px; /* 100px bottom padding for the now playing bar */
+  min-height: calc(100vh - 70px);
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.sectionTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem 0;
+  color: #fff;
+}
+
+.sectionHeader .sectionTitle {
+  margin-bottom: 0;
+}
+
+/* Playlists */
+.playlistGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.playlistCard {
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 2/1;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.playlistCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.playlistContent {
+  position: absolute;
+  inset: 0;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(0,0,0,0.2);
+}
+
+.playlistContent h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.playlistContent p {
+  margin: 0.5rem 0 0 0;
+  color: rgba(255,255,255,0.9);
+  font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.playFab {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #fff;
+  color: #000;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.playlistCard:hover .playFab {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.playFab:hover {
+  transform: scale(1.1) !important;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.25rem;
+  border-radius: 12px;
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.tab:hover {
+  color: #fff;
+}
+
+.activeTab {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Albums */
+.albumGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 2rem 1.5rem;
+}
+
+.albumCard {
+  cursor: pointer;
+}
+
+.albumCover {
+  position: relative;
+  aspect-ratio: 1/1;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.placeholderCover {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #1e293b, #334155);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  font-weight: 800;
+  color: rgba(255,255,255,0.1);
+}
+
+.albumOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.albumCard:hover .albumOverlay {
+  opacity: 1;
+}
+
+.roundPlayBtn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transform: translateY(10px);
+  transition: all 0.2s;
+}
+
+.albumCard:hover .roundPlayBtn {
+  transform: translateY(0);
+}
+
+.roundPlayBtn:hover {
+  background: #4f46e5;
+  transform: scale(1.05) translateY(0) !important;
+}
+
+.iconBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transform: translateY(10px);
+  transition: all 0.2s;
+}
+
+.albumCard:hover .iconBtn {
+  transform: translateY(0);
+}
+
+.iconBtn:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.albumInfo {
+  padding: 0 0.25rem;
+}
+
+.albumTitle {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #f8fafc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.albumArtist {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+.albumMeta {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+/* Now Playing Bar */
+.nowPlayingBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 90px;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  z-index: 100;
+}
+
+.npInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 30%;
+}
+
+.npCover {
+  width: 56px;
+  height: 56px;
+  border-radius: 6px;
+  background: linear-gradient(45deg, #e11d48, #be123c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.npText h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.npText p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.npControlsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+  max-width: 600px;
+}
+
+.npControls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.controlIcon {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.controlIcon:hover {
+  color: #fff;
+}
+
+.npPlayBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  color: #000;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.npPlayBtn:hover {
+  transform: scale(1.05);
+}
+
+.npProgress {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.progressBar {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+}
+
+.progressFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #6366f1;
+  border-radius: 2px;
+}
+
+.progressBar:hover .progressFill {
+  background: #818cf8;
+}
+
+.npActions {
+  width: 30%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .nowPlayingBar {
+    padding: 0 1rem;
+    height: 70px;
+  }
+  
+  .npInfo {
+    width: auto;
+  }
+  
+  .npControlsWrapper {
+    flex: 1;
+    margin: 0 1rem;
+  }
+  
+  .npProgress {
+    display: none; /* Hide progress bar on small mobile to save space */
+  }
+  
+  .npActions {
+    display: none; /* Hide actions on small mobile */
+  }
+  
+  .controlIcon:not(:nth-child(3)) {
+    display: none; /* Only show play button on mobile controls */
+  }
+}
