@@ -1,65 +1,82 @@
-import Image from "next/image";
+'use client';
+import { useEffect, useState } from 'react';
+import HeroBanner from '@/components/HeroBanner';
+import ContentRow from '@/components/ContentRow';
+import { Play } from 'lucide-react';
+import Link from 'next/link';
+import styles from './page.module.css';
+
+const MOCK_MOVIES = [
+  { id: '1', title: 'Inception', type: 'movie' as const, duration: '2h 28m' },
+  { id: '2', title: 'The Dark Knight', type: 'movie' as const, duration: '2h 32m' },
+  { id: '3', title: 'Interstellar', type: 'movie' as const, duration: '2h 49m' },
+  { id: '4', title: 'Pulp Fiction', type: 'movie' as const, duration: '2h 34m' },
+  { id: '5', title: 'Fight Club', type: 'movie' as const, duration: '2h 19m' },
+  { id: '6', title: 'The Matrix', type: 'movie' as const, duration: '2h 16m' },
+  { id: '7', title: 'Goodfellas', type: 'movie' as const, duration: '2h 25m' },
+];
+
+const MOCK_MUSIC = [
+  { id: 'm1', title: 'Midnight City', type: 'music' as const, duration: '4:03' },
+  { id: 'm2', title: 'Blinding Lights', type: 'music' as const, duration: '3:20' },
+  { id: 'm3', title: 'Starboy', type: 'music' as const, duration: '3:50' },
+  { id: 'm4', title: 'Shape of You', type: 'music' as const, duration: '3:53' },
+  { id: 'm5', title: 'Levitating', type: 'music' as const, duration: '3:23' },
+];
 
 export default function Home() {
+  const [continueWatching, setContinueWatching] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Simulate loading from localStorage
+    const saved = localStorage.getItem('busstream_continue');
+    if (saved) {
+      try {
+        setContinueWatching(JSON.parse(saved));
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      // Mock some continue watching for demo purposes if empty
+      setContinueWatching([
+        { id: 'c1', title: 'Kabaddi 4', type: 'movie' as const, progress: 45 },
+        { id: 'c2', title: 'Chhakka Panja', type: 'movie' as const, progress: 12 },
+      ]);
+    }
+  }, []);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className={styles.main}>
+      <HeroBanner />
+      
+      <div className={styles.contentSections}>
+        {continueWatching.length > 0 && (
+          <div className={styles.continueRow}>
+            <h2 className={styles.sectionTitle}>Continue Watching</h2>
+            <div className={styles.continueGrid}>
+              {continueWatching.map(item => (
+                <Link href={`/player/${item.id}`} key={item.id} className={styles.continueCard}>
+                  <div className={styles.continueImg}>
+                    <div className={styles.playOverlay}>
+                      <Play size={32} fill="currentColor" />
+                    </div>
+                  </div>
+                  <div className={styles.continueInfo}>
+                    <h4>{item.title}</h4>
+                    <div className={styles.progressBar}>
+                      <div className={styles.progressFill} style={{ width: `${item.progress}%` }}></div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <ContentRow title="New Arrivals" items={MOCK_MOVIES.slice(0, 5)} />
+        <ContentRow title="Trending Movies" items={MOCK_MOVIES.slice(2, 7)} />
+        <ContentRow title="Nepali Hits" items={MOCK_MUSIC.slice(0, 4)} />
+      </div>
     </div>
   );
 }

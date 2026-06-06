@@ -1,0 +1,98 @@
+.main {
+  min-height: 100vh;
+}
+
+.contentSections {
+  position: relative;
+  z-index: 5;
+  margin-top: -3rem; /* Overlap with hero */
+}
+
+.sectionTitle {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-main);
+  padding: 0 2rem;
+}
+
+.continueRow {
+  margin-bottom: 3rem;
+}
+
+.continueGrid {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0 2rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.continueGrid::-webkit-scrollbar {
+  display: none;
+}
+
+.continueCard {
+  flex: 0 0 300px;
+  background: var(--bg-surface);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s ease, background 0.2s ease;
+  border: 1px solid var(--border-color);
+}
+
+.continueCard:hover {
+  transform: translateY(-5px);
+  background: rgba(31, 40, 51, 0.9);
+  border-color: var(--primary-color);
+}
+
+.continueImg {
+  height: 160px;
+  background: linear-gradient(135deg, #45a29e, #0b0c10);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.playOverlay {
+  background: rgba(0, 0, 0, 0.5);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  opacity: 0.8;
+  transition: all 0.2s;
+}
+
+.continueCard:hover .playOverlay {
+  opacity: 1;
+  transform: scale(1.1);
+  background: var(--primary-color);
+  color: var(--bg-color);
+}
+
+.continueInfo {
+  padding: 1rem;
+}
+
+.continueInfo h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.progressBar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--danger);
+}

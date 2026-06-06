@@ -1,0 +1,153 @@
+.playerWrapper {
+  height: 100vh;
+  width: 100vw;
+  background-color: #000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+}
+
+.topBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.playerWrapper:hover .topBar {
+  opacity: 1;
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.backBtn:hover {
+  color: var(--primary-color);
+}
+
+.title {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.iconBtn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.videoContainer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 100%;
+}
+
+/* Override plyr styles slightly for our theme */
+:global(.plyr) {
+  width: 100%;
+  height: 100%;
+  --plyr-color-main: var(--primary-color);
+}
+
+.skipIntroBtn {
+  position: absolute;
+  bottom: 80px;
+  right: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.skipIntroBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.resumePromptOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+.resumePrompt {
+  padding: 2.5rem;
+  text-align: center;
+  max-width: 400px;
+}
+
+.resumePrompt h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.resumePrompt p {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+.promptActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.resumeBtn, .startOverBtn {
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.resumeBtn {
+  background: var(--primary-color);
+  color: #000;
+}
+
+.startOverBtn {
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+.startOverBtn:hover {
+  background: rgba(255,255,255,0.2);
+}
