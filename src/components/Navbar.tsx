@@ -2,8 +2,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Search, Globe, Users, Bus, X } from 'lucide-react';
+import { Search, Globe, Users, Bus, X, Play } from 'lucide-react';
 import styles from './Navbar.module.css';
+import { MOCK_MOVIES, MOCK_TV_SHOWS, MOCK_MUSIC } from '@/data/mockData';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -17,6 +18,19 @@ export default function Navbar() {
     { name: 'Music', path: '/music' },
     { name: 'TV Shows', path: '/tv' },
   ];
+
+  const getSearchResults = () => {
+    if (!searchQuery.trim()) return [];
+    const query = searchQuery.toLowerCase();
+    
+    const movies = MOCK_MOVIES.filter(m => m.title.toLowerCase().includes(query)).map(m => ({ ...m, link: `/player/${m.id}` }));
+    const tv = MOCK_TV_SHOWS.filter(t => t.title.toLowerCase().includes(query)).map(t => ({ ...t, link: `/player/${t.id}` }));
+    const music = MOCK_MUSIC.filter(m => m.title.toLowerCase().includes(query)).map(m => ({ ...m, link: `/player/${m.id}` }));
+    
+    return [...movies, ...tv, ...music].slice(0, 6);
+  };
+
+  const results = getSearchResults();
 
   return (
     <nav className={`glass ${styles.navbar}`}>
@@ -93,8 +107,35 @@ export default function Navbar() {
           
           {searchQuery && (
             <div className={styles.searchResults}>
-              <p className={styles.searchHint}>Press Enter to search for "{searchQuery}"</p>
-              {/* Mock results could go here */}
+              {results.length > 0 ? (
+                <div className={styles.resultsGrid}>
+                  {results.map(item => (
+                    <Link 
+                      href={item.link} 
+                      key={item.id} 
+                      className={styles.resultItem}
+                      onClick={() => setIsSearchOpen(false)}
+                    >
+                      <div className={styles.resultImgContainer}>
+                        <img 
+                          src={`https://picsum.photos/seed/${item.id}/100/100`} 
+                          alt={item.title} 
+                          className={styles.resultImg} 
+                        />
+                      </div>
+                      <div className={styles.resultInfo}>
+                        <div className={styles.resultTitle}>{item.title}</div>
+                        <div className={styles.resultType}>
+                          {item.type === 'tv' ? 'TV Show' : item.type.charAt(0).toUpperCase() + item.type.slice(1)}
+                        </div>
+                      </div>
+                      <Play size={20} className={styles.resultPlay} />
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <p className={styles.searchHint}>No results found for "{searchQuery}"</p>
+              )}
             </div>
           )}
         </div>
