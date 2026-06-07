@@ -4,11 +4,31 @@
   position: relative;
 }
 
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
 .title {
   font-size: 1.4rem;
   font-weight: 600;
-  margin-bottom: 1rem;
   color: var(--text-main);
+}
+
+.seeMore {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+  color: var(--primary-color);
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.seeMore:hover {
+  opacity: 0.8;
 }
 
 .sliderWrap {

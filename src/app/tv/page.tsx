@@ -2,29 +2,29 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Play, Info, Filter, ChevronDown } from 'lucide-react';
-import styles from './page.module.css';
+import styles from '../movies/page.module.css';
 
-import { MOCK_MOVIES } from '@/data/mockData';
+import { MOCK_TV_SHOWS } from '@/data/mockData';
 
-export default function MoviesPage() {
+export default function TvShowsPage() {
   const [filterGenre, setFilterGenre] = useState('All');
   const [sortBy, setSortBy] = useState('Most Popular');
 
   const genres = ['All', 'Action', 'Comedy', 'Drama', 'Sci-Fi', 'Crime'];
   const sorts = ['Most Popular', 'Newest', 'A-Z'];
 
-  const filteredMovies = MOCK_MOVIES
-    .filter(movie => filterGenre === 'All' || movie.genre === filterGenre)
+  const filteredShows = MOCK_TV_SHOWS
+    .filter(show => filterGenre === 'All' || show.genre === filterGenre)
     .sort((a, b) => {
       if (sortBy === 'A-Z') return a.title.localeCompare(b.title);
       if (sortBy === 'Newest') return parseInt(b.year) - parseInt(a.year);
-      return 0; // Most Popular logic would go here
+      return 0;
     });
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.title}>Movies</h1>
+        <h1 className={styles.title}>TV Shows</h1>
         
         <div className={styles.controls}>
           <div className={styles.filterGroup}>
@@ -58,20 +58,20 @@ export default function MoviesPage() {
       </div>
 
       <div className={styles.grid}>
-        {filteredMovies.map(movie => (
-          <div key={movie.id} className={styles.card}>
+        {filteredShows.map(show => (
+          <div key={show.id} className={styles.card}>
             <div className={styles.imageWrapper}>
               <img 
-                src={`https://picsum.photos/seed/${movie.id}/400/600`} 
-                alt={movie.title} 
+                src={`https://picsum.photos/seed/${show.id}/400/600`} 
+                alt={show.title} 
                 className={styles.placeholderImage} 
                 style={{ objectFit: 'cover', width: '100%', height: '100%' }} 
               />
               <div className={styles.overlay}>
                 <div className={styles.overlayContent}>
-                  <p className={styles.synopsis}>{movie.description.substring(0, 80)}...</p>
+                  <p className={styles.synopsis}>{show.description.substring(0, 80)}...</p>
                   <div className={styles.actions}>
-                    <Link href={`/player/${movie.id}`} className={styles.playBtn}>
+                    <Link href={`/player/${show.id}`} className={styles.playBtn}>
                       <Play size={20} fill="currentColor" />
                       Play
                     </Link>
@@ -83,13 +83,13 @@ export default function MoviesPage() {
               </div>
             </div>
             <div className={styles.info}>
-              <h3 className={styles.movieTitle}>{movie.title}</h3>
+              <h3 className={styles.movieTitle}>{show.title}</h3>
               <div className={styles.meta}>
-                <span>{movie.year}</span>
+                <span>{show.year}</span>
                 <span className={styles.dot}>•</span>
-                <span>{movie.duration}</span>
+                <span>{show.seasons}</span>
                 <span className={styles.dot}>•</span>
-                <span className={styles.rating}>{movie.rating}</span>
+                <span className={styles.rating}>{show.rating}</span>
               </div>
             </div>
           </div>

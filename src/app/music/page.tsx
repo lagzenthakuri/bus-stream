@@ -3,14 +3,7 @@ import { useState } from 'react';
 import { Play, Pause, SkipForward, SkipBack, Shuffle, Repeat, ListMusic, Plus } from 'lucide-react';
 import styles from './page.module.css';
 
-const MOCK_ALBUMS = [
-  { id: 'a1', title: 'Starboy', artist: 'The Weeknd', year: '2016', tracks: 18, image: 'S' },
-  { id: 'a2', title: 'Future Nostalgia', artist: 'Dua Lipa', year: '2020', tracks: 11, image: 'F' },
-  { id: 'a3', title: 'After Hours', artist: 'The Weeknd', year: '2020', tracks: 14, image: 'A' },
-  { id: 'a4', title: '1989', artist: 'Taylor Swift', year: '2014', tracks: 13, image: '1' },
-  { id: 'a5', title: 'Divide', artist: 'Ed Sheeran', year: '2017', tracks: 16, image: 'D' },
-  { id: 'a6', title: 'Nepali Hits Vol 1', artist: 'Various Artists', year: '2023', tracks: 20, image: 'N' },
-];
+import { MOCK_MUSIC as MOCK_ALBUMS } from '@/data/mockData';
 
 const PLAYLISTS = [
   { id: 'p1', title: 'Road Trip Vibes', count: 45, color: 'linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%)' },
@@ -57,7 +50,12 @@ export default function MusicPage() {
           {MOCK_ALBUMS.map(album => (
             <div key={album.id} className={styles.albumCard}>
               <div className={styles.albumCover}>
-                <div className={styles.placeholderCover}>{album.image}</div>
+                <img 
+                  src={`https://picsum.photos/seed/${album.id}/400/400`} 
+                  alt={album.title} 
+                  className={styles.placeholderCover} 
+                  style={{ objectFit: 'cover', width: '100%', height: '100%' }} 
+                />
                 <div className={styles.albumOverlay}>
                   <button className={styles.roundPlayBtn}>
                     <Play size={20} fill="currentColor" />

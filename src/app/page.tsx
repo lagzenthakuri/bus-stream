@@ -6,23 +6,7 @@ import { Play, UserCircle } from 'lucide-react';
 import Link from 'next/link';
 import styles from './page.module.css';
 
-const MOCK_MOVIES = [
-  { id: '1', title: 'Inception', type: 'movie' as const, duration: '2h 28m' },
-  { id: '2', title: 'The Dark Knight', type: 'movie' as const, duration: '2h 32m' },
-  { id: '3', title: 'Interstellar', type: 'movie' as const, duration: '2h 49m' },
-  { id: '4', title: 'Pulp Fiction', type: 'movie' as const, duration: '2h 34m' },
-  { id: '5', title: 'Fight Club', type: 'movie' as const, duration: '2h 19m' },
-  { id: '6', title: 'The Matrix', type: 'movie' as const, duration: '2h 16m' },
-  { id: '7', title: 'Goodfellas', type: 'movie' as const, duration: '2h 25m' },
-];
-
-const MOCK_MUSIC = [
-  { id: 'm1', title: 'Midnight City', type: 'music' as const, duration: '4:03' },
-  { id: 'm2', title: 'Blinding Lights', type: 'music' as const, duration: '3:20' },
-  { id: 'm3', title: 'Starboy', type: 'music' as const, duration: '3:50' },
-  { id: 'm4', title: 'Shape of You', type: 'music' as const, duration: '3:53' },
-  { id: 'm5', title: 'Levitating', type: 'music' as const, duration: '3:23' },
-];
+import { MOCK_MOVIES, MOCK_MUSIC } from '@/data/mockData';
 
 export default function Home() {
   const [continueWatching, setContinueWatching] = useState<any[]>([]);
@@ -74,8 +58,13 @@ export default function Home() {
             <div className={styles.continueGrid}>
               {continueWatching.map(item => (
                 <Link href={`/player/${item.id}`} key={item.id} className={styles.continueCard}>
-                  <div className={styles.continueImg}>
-                    <div className={styles.playOverlay}>
+                  <div className={styles.continueImg} style={{ position: 'relative' }}>
+                    <img 
+                      src={`https://picsum.photos/seed/${item.id}/400/225`} 
+                      alt={item.title} 
+                      style={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, borderRadius: '8px' }} 
+                    />
+                    <div className={styles.playOverlay} style={{ zIndex: 1 }}>
                       <Play size={32} fill="currentColor" />
                     </div>
                   </div>
@@ -91,9 +80,9 @@ export default function Home() {
           </div>
         )}
 
-        <ContentRow title="New Arrivals" items={MOCK_MOVIES.slice(0, 5)} />
-        <ContentRow title="Trending Movies" items={MOCK_MOVIES.slice(2, 7)} />
-        <ContentRow title="Nepali Hits" items={MOCK_MUSIC.slice(0, 4)} />
+        <ContentRow title="New Arrivals" items={MOCK_MOVIES.slice(0, 20)} link="/movies" linkText="See All Movies" />
+        <ContentRow title="Trending Movies" items={MOCK_MOVIES.slice(20, 40)} link="/movies" linkText="See Trending" />
+        <ContentRow title="Nepali Hits" items={MOCK_MUSIC.slice(0, 20)} link="/music" linkText="See All Music" />
       </div>
 
       {showNamePrompt && (

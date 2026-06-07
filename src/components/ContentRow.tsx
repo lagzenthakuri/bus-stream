@@ -15,9 +15,11 @@ interface Item {
 interface ContentRowProps {
   title: string;
   items: Item[];
+  link?: string;
+  linkText?: string;
 }
 
-export default function ContentRow({ title, items }: ContentRowProps) {
+export default function ContentRow({ title, items, link, linkText }: ContentRowProps) {
   const rowRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -30,7 +32,14 @@ export default function ContentRow({ title, items }: ContentRowProps) {
 
   return (
     <div className={styles.rowContainer}>
-      <h2 className={styles.title}>{title}</h2>
+      <div className={styles.header}>
+        <h2 className={styles.title}>{title}</h2>
+        {link && (
+          <Link href={link} className={styles.seeMore}>
+            {linkText || 'See All'} <ChevronRight size={18} />
+          </Link>
+        )}
+      </div>
       <div className={styles.sliderWrap}>
         <button className={`${styles.sliderArrow} ${styles.leftArrow}`} onClick={() => scroll('left')}>
           <ChevronLeft size={30} />
@@ -40,13 +49,12 @@ export default function ContentRow({ title, items }: ContentRowProps) {
           {items.map((item) => (
             <div key={item.id} className={styles.item}>
               <div className={styles.posterContainer}>
-                {/* Fallback gradient for missing images */}
-                <div 
-                  className={styles.posterBg}
-                  style={{ background: `linear-gradient(45deg, #1f2833, ${item.type === 'movie' ? '#45a29e' : '#ff4c4c'})` }}
-                >
-                  <span className={styles.fallbackTitle}>{item.title}</span>
-                </div>
+                <img 
+                  src={`https://picsum.photos/seed/${item.id}/400/600`} 
+                  alt={item.title} 
+                  className={styles.posterBg} 
+                  style={{ objectFit: 'cover', width: '100%', height: '100%' }} 
+                />
                 
                 <div className={styles.hoverOverlay}>
                   <Link href={`/player/${item.id}`} className={styles.playIcon}>
